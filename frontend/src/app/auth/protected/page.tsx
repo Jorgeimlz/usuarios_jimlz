@@ -1,7 +1,8 @@
 // src/app/auth/protected/page.tsx
+"use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 export default function ProtectedPage() {
@@ -12,13 +13,15 @@ export default function ProtectedPage() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/protected/', { withCredentials: true });
+        const response = await axios.get('http://localhost:8000/protected/', {
+          withCredentials: true,
+        });
         if (response.status === 200) {
           setIsAuthenticated(true);
         }
       } catch (error) {
         console.error('No autenticado', error);
-        router.push('/auth/login');
+        router.push('/auth/login'); // Redirige si no está autenticado
       } finally {
         setIsLoading(false);
       }
@@ -36,3 +39,4 @@ export default function ProtectedPage() {
     </div>
   );
 }
+

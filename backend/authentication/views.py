@@ -28,6 +28,9 @@ def login_view(request):
             login(request, user)
             return JsonResponse({"message": "User logged in successfully"}, status=200)
         return JsonResponse({"message": "Invalid credentials"}, status=400)
+    
+    # Devuelve un mensaje informando que es necesario un método POST para iniciar sesión
+    return JsonResponse({"message": "Please use POST to log in"}, status=405)
 
 @login_required(login_url='/login/')
 def protected_view(request):
